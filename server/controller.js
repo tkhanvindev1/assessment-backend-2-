@@ -1,5 +1,5 @@
 
-
+const usersData = ["skywalker243","jordan2333","royjohnbuffalo32"]
 
 
 module.exports = {
@@ -21,28 +21,47 @@ module.exports = {
       
         res.status(200).send(randomFortune);
     },
-    postUser: (req,res) => {
-        const usersData = []
 
+
+    postUser: (req,res) => {
     console.log("POST endpoint touchdown");
-    console.log(req.body)
-    console.log(req.body.firstname)
+
+    usersData.push(req.body.username)   //user stored in data base
     
-    usersData.push(req.body)   //user stored in data base
-    console.log(usersData)
-    res.status(200).send(usersData[usersData.length - 1])
+    postRespose = `Welcome ${(usersData[usersData.length - 1])}!`
+    console.log(postRespose)
+    res.status(200).send(postRespose)
     },
 
-    putUsername: (req,res) => {
-        const people = require('./db.json')
-        
-        console.log('PUT endpoint touchdown!')
-        
-
-
-        
-
-        
-                res.status("Username has been updated")
+    putUser: (req,res) => {
+        console.log("PUT endpoint TOUCHDOWN!")
+        console.log(req.params);
+        console.log(req.body)
+        const usernameToEdit = req.params.username
+        const newUsername = req.body.new_username
+        for(i = 0; i < usersData.length; i++){
+            if(usersData[i] === usernameToEdit){
+                usersData[i] = newUsername
             }
         }
+        res.status(200).send(usersData)    
+    },
+
+    deleteUser: (req,res) => {
+        console.log("DELETE endpoint TOUCHDOWN!")
+        console.log(req.params);
+        const usernameToDelete = String(req.params.username)
+        console.log(usernameToDelete)
+        indexOfUserToDelete = (usersData.indexOf(usernameToDelete))
+        console.log(indexOfUserToDelete)
+        
+        usersData.splice(indexOfUserToDelete, 1);
+
+        res.status(200).send(usersData)
+        }
+        
+        
+        
+    
+   
+}

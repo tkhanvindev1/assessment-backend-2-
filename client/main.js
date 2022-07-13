@@ -20,49 +20,79 @@ const getFortune = () => {
     })
 }
 
-complimentBtn.addEventListener('click', getCompliment)
-fortuneBtn.addEventListener('click', getFortune)
-
-//POST
 
 
-const submitNameBtn = document.getElementById("submitName")
+//2.POST
+
+
+
 const inputFirstName = document.getElementById("fname")
 const inputLastName = document.getElementById("lname")
+const inputUsername = document.getElementById("username")
+const submitNameBtn = document.getElementById("submitName")
 
 const postUser = () => {
     const newUser = {
         firstname: inputFirstName.value,
-        lastname: inputLastName.value
+        lastname: inputLastName.value,
+        username: inputUsername.value
     }
     axios
-        .post("http://localhost:4000/api/users", newUser)
-        .then( res => {
-            const dataUser = res.body.firstname
-            alert(`Welcome ${dataUser}`)
+        .post("http://localhost:4000/api/post/user", newUser)
+        .then(res => {
+            alert(res.data)
         })
 }
 
-submitNameBtn.addEventListener('click', postUser)
 
-//PUT
+//3.PUT
 
-const inputUsernameChange = document.getElementById("change-username")
-const updateUserBtn = document.getElementById("change-user-button")
+const newNameInput = document.getElementById("change-username")
+const oldNameInput = document.getElementById("current-username") 
+const changeUsernameBtn = document.getElementById("change-user-button")
 
 
-const putUsername = () => {
-    let newUsername = inputUsernameChange.value
-        
-    axios
-    .put('http://localhost:4000/api/usersname', newUsername)
-    console.log(req.params)
-  console.log(req.query)
-  console.log(req.body)
-    .then( res => {
-        
-        console.log(req)
-    })
+ const putUser = () => {
+         const putBody = {
+            new_username: newNameInput.value
+         }
+         axios.put(`http://localhost:4000/api/put/name/${oldNameInput.value}`, putBody)
+         .then((res) => {
+            alert(res.data)
+         })
+
 }
 
-updateJobBtn.addEventListener('click', putUsername) 
+//4.DELETE 
+
+ const usernameToDelete = document.getElementById("delete-username")
+ const deleteBtn = document.getElementById("delete-user-button")
+
+
+ const deleteUser = () => {
+        
+         axios.delete(`http://localhost:4000/api/put/name/${usernameToDelete.value}`)
+         .then ((res) => {
+            alert(res.data)
+         })
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+deleteBtn.addEventListener('click', deleteUser)
+changeUsernameBtn.addEventListener('click', putUser)
+submitNameBtn.addEventListener('click', postUser)
+complimentBtn.addEventListener('click', getCompliment)
+fortuneBtn.addEventListener('click', getFortune)
+
+
